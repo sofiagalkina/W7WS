@@ -3,6 +3,22 @@ const express = require('express');
 const app = express();
 const { auth, requiresAuth } = require('express-openid-connect');
 require('dotenv').config();
+//importing mongodb functions
+const {connectToDb, getDb} = require('./db')
+
+
+// connection to the database 
+
+let db
+
+connectToDb((err) => {
+  if(!err){
+    app.listen(3000, () => {
+      console.log('app listening on the server 3000')
+    })
+    db = getDb()
+  }
+})
 
 
 
@@ -37,7 +53,11 @@ app.get('/profile', (req, res) => {
 });
 
 // Start the Express server
-const PORT = process.env.PORT || 3000;
+/*
+
+ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+*/
